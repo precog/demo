@@ -1,3 +1,5 @@
+import AssemblyKeys._
+
 name := "precog-demo"
 
 version := "0.1"
@@ -17,12 +19,12 @@ resolvers ++= Seq(
 
 scalacOptions ++= Seq("-unchecked", "-deprecation")
 
+assemblySettings
+
 libraryDependencies ++= Seq(
   "com.reportgrid" % "blueeyes-core_2.9.2" % "1.0.0-M6",
   "com.reportgrid" % "blueeyes-json_2.9.2" % "1.0.0-M6",
-  "org.specs2" %% "specs2" % "1.12.2" ,
   "org.scalaz"             % "scalaz-core_2.9.2"        % "7.0.0-M3" ,
-  "org.scalaz"             % "scalaz-iterv_2.9.2"       % "7.0.0-M3" ,
   "org.joda"              % "joda-convert"           % "1.2",
   "joda-time"              % "joda-time"           % "2.1"
 )

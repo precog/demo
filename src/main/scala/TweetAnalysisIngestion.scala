@@ -4,7 +4,8 @@ import blueeyes.bkka.AkkaDefaults._
 import akka.dispatch.{Future, ExecutionContext, Await}
 import blueeyes.bkka.FutureMonad
 import blueeyes.core.data._
-import blueeyes.core.http.HttpResponse
+import blueeyes.core.http.HttpStatusCodes.OK
+import blueeyes.core.http.{HttpStatus, HttpResponse}
 import blueeyes.core.service.engines.HttpClientXLightWeb
 import blueeyes.json._
 import blueeyes.core.service._
@@ -116,9 +117,9 @@ object TweetAnalysisIngestion {
           bytes
         }))
         println("Sending to Precog")
-        val fresponse=httpClient.parameters('apiKey -> apiKey).post(fullPath)(body)
+        val fresponse=httpClient.parameters('apiKey -> apiKey).header("Content-Type","application/json").post(fullPath)(body)
         fresponse.map( response =>response match {
-          case HttpResponse(_, _, Some(Left(buffer)), _) => println(new String(buffer.array(), "UTF-8"))
+          case HttpResponse(HttpStatus(OK,_), _, Some(Left(buffer)), _) => println(new String(buffer.array(), "UTF-8"))
           case _ => println("Unexpected response %s".format(response))
         })
       }
